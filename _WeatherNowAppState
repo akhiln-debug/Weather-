@@ -1,0 +1,27 @@
+@override
+void initState() {
+  super.initState();
+  loadTemperatureSetting();
+}
+
+Future<void> loadTemperatureSetting() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  if (!mounted) return;
+
+  setState(() {
+    fahrenheit = prefs.getBool('fahrenheit') ?? false;
+  });
+}
+
+Future<void> updateTemperatureSetting(bool value) async {
+  final prefs = await SharedPreferences.getInstance();
+
+  await prefs.setBool('fahrenheit', value);
+
+  if (!mounted) return;
+
+  setState(() {
+    fahrenheit = value;
+  });
+}
